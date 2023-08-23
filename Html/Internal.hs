@@ -28,6 +28,25 @@ p_ = Structure . el "p" . escape
 h1_ :: String -> Structure
 h1_ = Structure . el "h1" . escape
 
+ul_ :: [Structure] -> Structure
+ul_ =
+  let
+    generateLi c =
+      el "li" (getStructureString c)
+    in
+      Structure . el "ul" . concat . map generateLi
+
+ol_ :: [Structure] -> Structure
+ol_ =
+  let
+    generateLi c =
+      el "li" (getStructureString c)
+    in
+      Structure . el "ol" . concat . map (el "li" . getStructureString)
+
+code_ :: String -> Structure
+code_ = Structure . el "pre" . escape
+
 append_ :: Structure -> Structure -> Structure
 append_ c1 c2 =
   Structure (getStructureString c1 <> getStructureString c2)
